@@ -1,26 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {MouseEvent} from 'react';
 import './App.css';
+import OnOff from "./components/OnOff";
+import {useState} from "react";
+import UncontrolledAccordion from "./components/UncontrolledAccordion/UncontrolledAccordion";
+import UncontrolledRating from "./components/UncontrolledRating/UncontrolledRating";
+import Accordion from "./components/Accordion/Accordion";
+import Rating, {RatingValueType} from "./components/Rating/Rating";
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [state, setState] = useState<boolean>(false)
+    const [collapsed, setCollapsed] = useState<boolean>(true)
+    const [ratingValue, setRatingValue] = useState<RatingValueType>(1)
+    const switcher = () => {
+        setState(!state)
+    }
+
+    return (
+        <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            margin: '0 auto',
+            alignItems: 'center',
+            paddingTop: '15px'
+        }}>
+            <OnOff switcher={switcher} state={state}/>
+            <UncontrolledAccordion/>
+            <UncontrolledRating/>
+            <Accordion collapsed={collapsed} onClick={() => {setCollapsed(!collapsed)}}/>
+            <Rating value={ratingValue} onClick={setRatingValue}/>
+        </div>
+    )
 }
+
 
 export default App;
