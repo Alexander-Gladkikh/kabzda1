@@ -1,6 +1,6 @@
 import React from "react";
 
-export type RatingValueType = 1 | 2 | 3 | 4
+export type RatingValueType = 0 | 1 | 2 | 3 | 4
 
 type RatingPropsType = {
     value: RatingValueType

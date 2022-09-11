@@ -3,13 +3,14 @@ import React from "react";
 type AccordionPropsType = {
     collapsed: boolean
     onClick: () => void
+    items: string[]
 }
 
 function Accordion(props: AccordionPropsType) {
     return (
         <div>
             <AccordionTitle onClick={props.onClick}/>
-            {props.collapsed && <AccordionBody/>}
+            {props.collapsed && <AccordionBody items={props.items}/>}
         </div>
     )
 }
@@ -24,13 +25,14 @@ function AccordionTitle (props: AccordionTitlePropsType) {
     )
 }
 
-function AccordionBody () {
+type AccordionBodyPropsType = {
+    items: string[]
+}
+
+function AccordionBody (props: AccordionBodyPropsType) {
     return (
         <ul>
-            <li>1</li>
-            <li>2</li>
-            <li>3</li>
-            <li>4</li>
+            { props.items.map( i => <li>{i}</li>) }
         </ul>
     )
 }
