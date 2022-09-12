@@ -1,6 +1,8 @@
 import React, {useState} from "react";
+import {SelectBody} from "./SelectBody";
+import {SelectTitle} from "./SelectTitle";
 
-type ItemType = {
+export type ItemType = {
     title: string
     value: any
 }
@@ -26,28 +28,13 @@ export function Select(props: SelectedPropsType) {
 
     return (
         <div>
-            <div onClick={onClickCollapsed} onDoubleClick={onBlurCollapsed}>{props.selectValue}</div>
+            <SelectTitle selectValue={props.selectValue} onClickCollapsed={onClickCollapsed} onBlurCollapsed={onBlurCollapsed}/>
             {props.select && <SelectBody items={props.items} callbackSelectValue={props.onChange}/>}
 
         </div>
     )
 }
 
-type SelectBodyPropsType = {
-    items: ItemType[]
-    callbackSelectValue: (value: string) => void
-}
 
-export function SelectBody(props: SelectBodyPropsType) {
 
-    const onClickHandler = (event: any) => {
-        props.callbackSelectValue(event.currentTarget.innerHTML)
-       // console.log(event.currentTarget.innerHTML)
-    }
 
-    return (
-        <>
-            {props.items.map(i => <div onDoubleClick={onClickHandler}>{i.title}</div>)}
-        </>
-    )
-}
