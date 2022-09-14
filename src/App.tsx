@@ -14,7 +14,7 @@ function App() {
     const [collapsed, setCollapsed] = useState<boolean>(true)
     const [ratingValue, setRatingValue] = useState<RatingValueType>(1)
     const [select, setSelect] = useState<boolean>(true)
-    const [selectValue, setSelectValue] = useState('no-name')
+    const [selectValue, setSelectValue] = useState<string>('Выберете имя')
 
     let items = [{title: 'Dima', value: 1},
         {title: 'Valera', value: 2},
@@ -27,7 +27,6 @@ function App() {
     }
 
     const onBlurCollapsed = () => {
-        alert('sdb')
         select && setSelect(false)
     }
 
@@ -35,28 +34,29 @@ function App() {
         setSelectValue(value)
     }
 
-const switcher = () => {
-    setState(!state)
-}
+    const switcher = () => {
+        setState(!state)
+    }
 
-return (
-    <div style={{
-        display: 'flex',
-        flexDirection: 'column',
-        margin: '0 auto',
-        alignItems: 'center',
-        paddingTop: '15px'
-    }}>
-        <OnOff switcher={switcher} state={state}/>
-        <UncontrolledAccordion/>
-        <UncontrolledRating/>
-        <Accordion collapsed={collapsed} onClick={() => {
-            setCollapsed(!collapsed)
-        }} items={[]}/>
-        <Rating value={ratingValue} onClick={setRatingValue}/>
-        <Select onBlurCollapsed={onBlurCollapsed} onChange={callbackSelectValue} items={items} select={select} onClickCollapsed={onClickCollapsed} selectValue={selectValue}/>
-    </div>
-)
+    return (
+        <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            margin: '0 auto',
+            alignItems: 'center',
+            paddingTop: '15px'
+        }}>
+            <OnOff switcher={switcher} state={state}/>
+            <UncontrolledAccordion/>
+            <UncontrolledRating/>
+            <Accordion collapsed={collapsed} onClick={() => {
+                setCollapsed(!collapsed)
+            }} items={[]}/>
+            <Rating value={ratingValue} onClick={setRatingValue}/>
+            <Select onBlurCollapsed={onBlurCollapsed} onChange={callbackSelectValue} items={items} select={select}
+                    onClickCollapsed={onClickCollapsed} selectValue={selectValue}/>
+        </div>
+    )
 }
 
 

@@ -4,18 +4,19 @@ import {ItemType} from "./Select";
 type SelectBodyPropsType = {
     items: ItemType[]
     callbackSelectValue: (value: string) => void
+    onClickCollapsed: () => void
 }
 
 export function SelectBody(props: SelectBodyPropsType) {
 
     const onClickHandler = (event: any) => {
         props.callbackSelectValue(event.currentTarget.innerHTML)
-        // console.log(event.currentTarget.innerHTML)
+        props.onClickCollapsed()
     }
 
     return (
-        <>
-            {props.items.map(i => <div onDoubleClick={onClickHandler}>{i.title}</div>)}
-        </>
+        <ul>
+            {props.items.map(i => <li onClick={onClickHandler}>{i.title}</li>)}
+        </ul>
     )
 }

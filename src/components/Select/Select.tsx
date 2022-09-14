@@ -12,7 +12,7 @@ type SelectedPropsType = {
     select: boolean
     items: ItemType[]
     onClickCollapsed: () => void
-    selectValue: any
+    selectValue: string | undefined
     onBlurCollapsed: () => void
 }
 
@@ -22,16 +22,25 @@ export function Select(props: SelectedPropsType) {
         props.onClickCollapsed()
     }
 
-    const onBlurCollapsed = () => {
-        props.onBlurCollapsed()
-    }
 
     return (
-        <div>
-            <SelectTitle selectValue={props.selectValue} onClickCollapsed={onClickCollapsed} onBlurCollapsed={onBlurCollapsed}/>
-            {props.select && <SelectBody items={props.items} callbackSelectValue={props.onChange}/>}
+        <>
+            <select>
+                <option value="1">Moscow</option>
+                <option value="2">Minsk</option>
+            </select>
+        <div tabIndex={0} onBlur={props.onBlurCollapsed}>
+            <SelectTitle
+                selectValue={props.selectValue}
+                onClickCollapsed={onClickCollapsed}
+                />
+            {props.select && <SelectBody
+                items={props.items}
+                callbackSelectValue={props.onChange}
+                onClickCollapsed={onClickCollapsed}/>}
 
         </div>
+        </>
     )
 }
 
