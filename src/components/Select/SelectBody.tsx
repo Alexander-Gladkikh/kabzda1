@@ -16,7 +16,7 @@ export function SelectBody(props: SelectBodyPropsType) {
 
     return (
         <ul>
-            {props.items.map(i => <li onClick={onClickHandler}>{i.title}</li>)}
+            {props.items.map((i, index) => <li key={index} onClick={onClickHandler}>{i.title}</li>)}
         </ul>
     )
 }
