@@ -1,52 +1,81 @@
-import React, {ChangeEvent, useRef, useState} from 'react';
+import React, {useMemo, useState} from "react";
+
+
 
 export default {
     title: 'useMemo',
+    // component: input
 };
 
-type CitiesType = {
-    id: string
-    country: string
-    name: string
+export const DifficultCountingExample = () => {
+
+
+    const [a, setA] = useState<number>(5);
+    const [b, setB] = useState<number>(5);
+
+
+    let resultA = 1;
+    let resultB = 1;
+
+    resultA = useMemo(() => {
+        let tempResultA = 1
+        for (let i = 1; i <= a; i++) {
+            let fake = 0;
+            while(fake < 1000000) {
+                fake++;
+                const fakeValue = Math.random();
+            }
+            tempResultA = tempResultA * i;
+        }
+        return tempResultA;
+    }, [a])
+
+
+
+    for (let i = 1; i <= b; i++) {
+        resultB = resultB * i;
+    }
+
+    return <>
+        <input value={a} onChange={event => setA(+(event.currentTarget.value))}/>
+        <input value={b} onChange={event => setB(+(event.currentTarget.value))}/>
+<hr/>
+        <div>Result A : {resultA}</div>
+        <div>Result B : {resultB}</div>
+    </>
+
 }
 
-export const CitySelectors = () => {
-    console.log('rerender CitySelectors')
-    const cities: CitiesType[] = [
-        {id: 'yes', country: 'Russia', name: 'Belgorod'},
-        {id: 'yes', country: 'Russia', name: 'Kursk'},
-        {id: 'yes', country: 'Belarus', name: 'Minsk'},
-        {id: 'no', country: 'USA', name: 'New York'},
-        {id: 'no', country: 'France', name: 'Parish'},
-        {id: 'yes', country: 'China', name: 'Beijing'},
-    ]
 
-    const [count, setCount] = useState<number>(0);
-
-    return (
-        <>
-            {count}<button onClick={() => setCount(count+1)}>+</button>
-            <CountrySelector cities={cities}/>
-        </>
-    )
+const UsersSecret = (props: {users: string[]}) => {
+    console.log('UsersSecret')
+    return <div>
+        {props.users.map((u, i) => <div key={i}>{u}</div>)}
+    </div>
 }
 
-type CountrySelectorPropsType = {
-    cities: CitiesType[]
+const Users = React.memo(UsersSecret)
+
+export const HelpsToReactMemo = () => {
+    console.log("HelpsToReactMemo");
+    const [counter, setCounter] = useState(0);
+    const [users, setUsers] = useState(['Dimych', 'Valera', 'Artem', 'Katya'])
+
+    const newArray = useMemo(() => {
+        return users.filter(u => u.toLowerCase().indexOf('a') > -1)
+    }, [users]);
+
+    const addUser = () => {
+        const newUsers = [...users, 'Sveta' + new Date().getTime()];
+        setUsers(newUsers);
+    }
+
+
+
+    return <>
+        <button onClick={() => setCounter(counter + 1)}>+</button>
+        <button onClick={addUser}>Add user</button>
+        {counter}
+        <Users users={newArray}/>
+    </>
 }
-
-export const CountrySelector = (props: CountrySelectorPropsType) => {
-    const newArray = props.cities.filter(el => el.country == 'Russia')
-    const countries = props.cities.map(el => el.country);
-
-    return (
-        <>
-            {props.cities.map((el, index) => <li key={index}>{el.country}</li>)}
-            <br/>
-            <ul>
-                {newArray.map((el, index) => <li key={index}>{el.name}</li>)}
-            </ul>
-        </>
-    )
-}
-
